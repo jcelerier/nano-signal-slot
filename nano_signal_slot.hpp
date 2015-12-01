@@ -37,7 +37,7 @@ class Signal<RT(Args...)> : private Observer
     public:
 
     using Delegate = Function<RT(Args...)>;
-    
+
     //-------------------------------------------------------------------CONNECT
 
     template <typename L>
@@ -78,7 +78,7 @@ class Signal<RT(Args...)> : private Observer
     {
         connect<T, mem_ptr>(std::addressof(instance));
     }
-    
+
     //----------------------------------------------------------------DISCONNECT
 
     template <typename L>
@@ -97,7 +97,7 @@ class Signal<RT(Args...)> : private Observer
     {
         Observer::remove(Delegate::template bind<fun_ptr>());
     }
-    
+
     template <typename T, RT (T::* mem_ptr)(Args...)>
     void disconnect(T* instance)
     {
@@ -119,7 +119,7 @@ class Signal<RT(Args...)> : private Observer
     {
         disconnect<T, mem_ptr>(std::addressof(instance));
     }
-    
+
     //----------------------------------------------------EMIT / EMIT ACCUMULATE
 
     #ifdef NANO_USE_DEPRECATED
@@ -141,7 +141,7 @@ class Signal<RT(Args...)> : private Observer
     #endif
 
     template <typename... Uref>
-    void emit(Uref&&... args)
+    void operator()(Uref&&... args)
     {
         Observer::onEach<Delegate>(std::forward<Uref>(args)...);
     }
