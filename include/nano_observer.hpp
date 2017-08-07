@@ -44,22 +44,6 @@ class Observer
         }
     }
 
-    void removeAll()
-    {
-        for (auto node = head; node;)
-        {
-            auto temp = node;
-            // If this is us we only need to delete
-            if (this != node->data.observer)
-            {
-                // Remove this slot from this listening Observer
-                node->data.observer->remove(node->data.delegate, this);
-            }
-            node = node->next;
-            delete temp;
-        }
-        head = nullptr;
-    }
 
     bool isEmpty() const
     {
@@ -91,6 +75,22 @@ class Observer
     //-----------------------------------------------------------------PROTECTED
 
     protected:
+    void removeAll()
+    {
+        for (auto node = head; node;)
+        {
+            auto temp = node;
+            // If this is us we only need to delete
+            if (this != node->data.observer)
+            {
+                // Remove this slot from this listening Observer
+                node->data.observer->remove(node->data.delegate, this);
+            }
+            node = node->next;
+            delete temp;
+        }
+        head = nullptr;
+    }
 
     ~Observer()
     {
