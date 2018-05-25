@@ -67,8 +67,8 @@ int main()
         Foo foo;
 
         // Connect member functions to Nano::Signals
-        signal_one.connect<Foo, &Foo::handler_a>(&foo);
-        signal_two.connect<Foo, &Foo::handler_b>(&foo);
+        signal_one.connect<&Foo::handler_a>(&foo);
+        signal_two.connect<&Foo::handler_b>(&foo);
 
         // Signal one should not be empty
         assert(!signal_one.empty());
@@ -93,8 +93,8 @@ int main()
         ,"how are you gentlemen");
 
         // Disconnect member functions from a Nano::Signal
-        signal_one.disconnect<Foo, &Foo::handler_a>(foo);
-        signal_two.disconnect<Foo, &Foo::handler_b>(foo);
+        signal_one.disconnect<&Foo::handler_a>(foo);
+        signal_two.disconnect<&Foo::handler_b>(foo);
 
         // Disconnect a static member function
         signal_one.disconnect<Foo::handler_c>();
@@ -116,14 +116,14 @@ int main()
         signal_two.disconnect(fo);
 
         // Test auto disconnect
-        signal_one.connect<Foo, &Foo::handler_a>(foo);
+        signal_one.connect<&Foo::handler_a>(foo);
 
         // Test copying, (currently deleted because of issue #15)
         //Nano::Signal<void()> signal_four = signal_three;
         //signal_four();
 
         // Test removeAll()
-        signal_two.connect<Foo, &Foo::handler_b>(&foo);
+        signal_two.connect<&Foo::handler_b>(&foo);
         signal_two.removeAll();
 
         // Test multiple explicit removeAll()
